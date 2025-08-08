@@ -2,172 +2,172 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/vi/1-introduce/</loc>
+    <loc>/vi/1-introduce/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/1-introduce/"
+                href="/1-introduce/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/1-introduce/"
+                href="/vi/1-introduce/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-accessibilitytoinstances/3.1-postnote/</loc>
+    <loc>/vi/3-accessibilitytoinstances/3.1-postnote/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-accessibilitytoinstances/3.1-postnote/"
+                href="/3-accessibilitytoinstances/3.1-postnote/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-accessibilitytoinstances/3.1-postnote/"
+                href="/vi/3-accessibilitytoinstances/3.1-postnote/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/2.1-createdynamodb/</loc>
+    <loc>/vi/2-prerequiste/2.1-createdynamodb/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/2.1-createdynamodb/"
+                href="/2-prerequiste/2.1-createdynamodb/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/2.1-createdynamodb/"
+                href="/vi/2-prerequiste/2.1-createdynamodb/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/</loc>
+    <loc>/vi/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/"
+                href="/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/"
+                href="/vi/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/</loc>
+    <loc>/vi/2-prerequiste/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/"
+                href="/2-prerequiste/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/"
+                href="/vi/2-prerequiste/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-accessibilitytoinstances/3.2-updatenote/</loc>
+    <loc>/vi/3-accessibilitytoinstances/3.2-updatenote/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-accessibilitytoinstances/3.2-updatenote/"
+                href="/3-accessibilitytoinstances/3.2-updatenote/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-accessibilitytoinstances/3.2-updatenote/"
+                href="/vi/3-accessibilitytoinstances/3.2-updatenote/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/2.2-tablecreatelambda/</loc>
+    <loc>/vi/2-prerequiste/2.2-tablecreatelambda/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/2.2-tablecreatelambda/"
+                href="/2-prerequiste/2.2-tablecreatelambda/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/2.2-tablecreatelambda/"
+                href="/vi/2-prerequiste/2.2-tablecreatelambda/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-accessibilitytoinstances/3.3-deletenote/</loc>
+    <loc>/vi/3-accessibilitytoinstances/3.3-deletenote/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-accessibilitytoinstances/3.3-deletenote/"
+                href="/3-accessibilitytoinstances/3.3-deletenote/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-accessibilitytoinstances/3.3-deletenote/"
+                href="/vi/3-accessibilitytoinstances/3.3-deletenote/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/2.3-functioncreateapi/</loc>
+    <loc>/vi/2-prerequiste/2.3-functioncreateapi/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/2.3-functioncreateapi/"
+                href="/2-prerequiste/2.3-functioncreateapi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/2.3-functioncreateapi/"
+                href="/vi/2-prerequiste/2.3-functioncreateapi/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/3-accessibilitytoinstances/</loc>
+    <loc>/vi/3-accessibilitytoinstances/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/3-accessibilitytoinstances/"
+                href="/3-accessibilitytoinstances/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/3-accessibilitytoinstances/"
+                href="/vi/3-accessibilitytoinstances/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/2-prerequiste/2.4-gatewayinstallpostman/</loc>
+    <loc>/vi/2-prerequiste/2.4-gatewayinstallpostman/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/2-prerequiste/2.4-gatewayinstallpostman/"
+                href="/2-prerequiste/2.4-gatewayinstallpostman/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/2-prerequiste/2.4-gatewayinstallpostman/"
+                href="/vi/2-prerequiste/2.4-gatewayinstallpostman/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/4-cleanup/</loc>
+    <loc>/vi/4-cleanup/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/4-cleanup/"
+                href="/4-cleanup/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/4-cleanup/"
+                href="/vi/4-cleanup/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/categories/</loc>
+    <loc>/vi/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/categories/"
+                href="/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/categories/"
+                href="/vi/categories/"
                 />
   </url><url>
-    <loc>//localhost:1313/vi/tags/</loc>
+    <loc>/vi/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="//localhost:1313/tags/"
+                href="/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="vi"
-                href="//localhost:1313/vi/tags/"
+                href="/vi/tags/"
                 />
   </url>
 </urlset>
