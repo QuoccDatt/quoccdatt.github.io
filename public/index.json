@@ -1,0 +1,99 @@
+[
+{
+	"uri": "//localhost:1313/2-prerequiste/2.1-createdynamodb/",
+	"title": "Create DynamoDB Table",
+	"tags": [],
+	"description": "",
+	"content": "Steps to Perform Step 1 – Open DynamoDB Console Go to the AWS Management Console. In the search bar, type DynamoDB, then select DynamoDB. Step 2 – Create a New Table Click Create table. Step 3 – Configure the Table Enter the following information:\nTable name:\nNotesTable Partition key:\nnoteId (type: String) ✅ Tip: Each note will be uniquely identified by noteId. This is the primary key that allows DynamoDB to quickly search for note data.\nStep 4 – Other Options Keep the default settings: Do not enable sort key Do not enable TTL Enable on-demand mode (no need to configure RCU/WCU) Step 5 – Create the Table Click Create table to finish. Wait a few seconds for the table to be created. ℹ️ After creation, you will see the NotesTable listed in the DynamoDB table list.\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "In the digital age, managing personal information anytime, anywhere has become an essential need. This workshop guides you through building a simple Personal Note-Taking System, deployed on a Serverless architecture using Amazon Web Services (AWS).\n🎯 Objectives Create a note-taking application with CRUD (Create, Read, Update, Delete) functionality. Deploy the application entirely on AWS services, without physical servers. Use DynamoDB to store note data. Create and handle APIs via AWS Lambda combined with API Gateway. Test and send API requests using Postman. Monitor logs and errors through CloudWatch Logs. ☁️ Why Choose Serverless Architecture No need to manage physical infrastructure or EC2. Automatically scalable and flexible. Cost-efficient – pay only when requests are made. Fast deployment, easy integration with the AWS ecosystem. 🔧 Technologies Used AWS Service Main Role DynamoDB Stores note data in NoSQL format Lambda Handles business logic for adding/viewing/editing/deleting notes API Gateway Receives HTTP requests and forwards them to Lambda CloudWatch Monitors logs, debugging, and system tracking IAM Manages access permissions to AWS services 👉 After completing the workshop, you’ll understand the process of building a basic serverless application and be able to customize additional features for your own note-taking system.\n"
+},
+{
+	"uri": "//localhost:1313/",
+	"title": "OVERVIEW",
+	"tags": [],
+	"description": "",
+	"content": "Overview In this lab, you will learn how to deploy a personal note-taking system using a serverless architecture on the AWS platform.\nThe application allows users to create, edit, view, and delete personal notes through APIs implemented with AWS Lambda and data managed by DynamoDB. Users can interact with the system using Postman or other HTTP client tools. The entire infrastructure is serverless, helping reduce costs and enabling easy scalability.\nOverall Architecture Content System and Architecture Introduction Preparation Steps Testing with Postman Resource Cleanup "
+},
+{
+	"uri": "//localhost:1313/3-accessibilitytoinstances/3.1-postnote/",
+	"title": "Test note creation (POST)",
+	"tags": [],
+	"description": "",
+	"content": "Implementation steps Step 1 - Open Postman and create new request Open Postman application Click New → HTTP Request Select method as POST Step 2 - Configure request URL:\nhttps://tg9k4ugn87.execute-api.ap-southeast-1.amazonaws.com/dev/notes\nHeaders:\nContent-Type: application/json Body (raw → JSON):\n{ \u0026#34;noteId\u0026#34;: \u0026#34;1\u0026#34;, \u0026#34;title\u0026#34;: \u0026#34;First Note\u0026#34;, \u0026#34;content\u0026#34;: \u0026#34;This is my first note\u0026#34; } Step 3 - Send request and check result Click Send Check response: { \u0026#34;message\u0026#34;: \u0026#34;Note created successfully!\u0026#34; } Step 4 - Check note in DynamoDB Access AWS Management Console\nFind DynamoDB service\nSelect NotesTable\nGo to Explore table items tab\nFind noteId = \u0026ldquo;1\u0026rdquo;\n✅ If the note displays correctly, you have created successfully!\n"
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/2.2-tablecreatelambda/",
+	"title": "Create Lambda Function",
+	"tags": [],
+	"description": "",
+	"content": "Steps: Create Logic Handling Function Step 1 – Start Creating a Lambda Function Go to the AWS Management Console. In the search bar, type Lambda, then select the Lambda service. On the Lambda management page, click the Create function button. Step 2 – Configure Basic Information Make sure the Author from scratch option is selected.\nFill in the following details:\nFunction name: getNote Runtime: Node.js 18.x Permissions: Keep the default option Create a new role with basic Lambda permissions. This will automatically create a basic IAM role that allows your function to write logs to Amazon CloudWatch. Finally, click Create function. ![Configure Lambda Details]\nBước 3 – Triển Khai Mã Xử Lý Trong tab Code source, thay thế mã mặc định bằng đoạn mã sau: Mã nguồn mẫu (Node.js ) createNote : const { DynamoDBClient } = require(\u0026#34;@aws-sdk/client-dynamodb\u0026#34;); const { DynamoDBDocumentClient, PutCommand } = require(\u0026#34;@aws-sdk/lib-dynamodb\u0026#34;); const client = new DynamoDBClient({}); const dynamo = DynamoDBDocumentClient.from(client); exports.handler = async (event) =\u0026gt; { console.log(\u0026#34;Received event:\u0026#34;, JSON.stringify(event)); try { const body = JSON.parse(event.body); const { noteId, title, content } = body; if (!noteId || !title || !content) { return { statusCode: 400, body: JSON.stringify({ error: \u0026#34;Missing noteId, title or content\u0026#34; }) }; } const params = { TableName: \u0026#34;NotesTable\u0026#34;, Item: { noteId, title, content } }; await dynamo.send(new PutCommand(params)); return { statusCode: 200, body: JSON.stringify({ message: \u0026#34;Note created successfully\u0026#34;, noteId }), }; } catch (err) { console.error(\u0026#34;Error:\u0026#34;, err); return { statusCode: 500, body: JSON.stringify({ error: \u0026#39;Failed to create note\u0026#39;, details: err.message }), }; } }; getNote : const { DynamoDBClient } = require(\u0026#34;@aws-sdk/client-dynamodb\u0026#34;); const { DynamoDBDocumentClient, GetCommand } = require(\u0026#34;@aws-sdk/lib-dynamodb\u0026#34;); const client = new DynamoDBClient({}); const dynamo = DynamoDBDocumentClient.from(client); exports.handler = async (event) =\u0026gt; { console.log(\u0026#34;Received event:\u0026#34;, JSON.stringify(event)); try { const noteId = event.pathParameters?.id; if (!noteId) { return { statusCode: 400, body: JSON.stringify({ error: \u0026#34;Missing noteId in pathParameters\u0026#34; }) }; } const params = { TableName: \u0026#34;NotesTable\u0026#34;, Key: { noteId } }; const result = await dynamo.send(new GetCommand(params)); if (!result.Item) { return { statusCode: 404, body: JSON.stringify({ message: \u0026#34;Note not found\u0026#34; }) }; } return { statusCode: 200, body: JSON.stringify(result.Item) }; } catch (err) { console.error(\u0026#34;Error getting note:\u0026#34;, err); return { statusCode: 500, body: JSON.stringify({ error: err.message }) }; } }; updateNote : const { DynamoDBClient } = require(\u0026#34;@aws-sdk/client-dynamodb\u0026#34;); const { DynamoDBDocumentClient, UpdateCommand } = require(\u0026#34;@aws-sdk/lib-dynamodb\u0026#34;); const client = new DynamoDBClient({}); const dynamo = DynamoDBDocumentClient.from(client); exports.handler = async (event) =\u0026gt; { console.log(\u0026#34;Received event:\u0026#34;, JSON.stringify(event)); try { const noteId = event.pathParameters?.id; if (!noteId) { return { statusCode: 400, body: JSON.stringify({ error: \u0026#34;Missing noteId in pathParameters\u0026#34; }) }; } const { title, content } = JSON.parse(event.body); if (!title || !content) { return { statusCode: 400, body: JSON.stringify({ error: \u0026#34;Missing title or content\u0026#34; }) }; } const params = { TableName: \u0026#34;NotesTable\u0026#34;, Key: { noteId }, UpdateExpression: \u0026#34;SET title = :title, content = :content\u0026#34;, ExpressionAttributeValues: { \u0026#34;:title\u0026#34;: title, \u0026#34;:content\u0026#34;: content }, ReturnValues: \u0026#34;ALL_NEW\u0026#34; }; const result = await dynamo.send(new UpdateCommand(params)); return { statusCode: 200, body: JSON.stringify(result.Attributes) }; } catch (err) { console.error(\u0026#34;Error updating note:\u0026#34;, err); return { statusCode: 500, body: JSON.stringify({ error: err.message }) }; } }; deleteNote : const { DynamoDBClient } = require(\u0026#34;@aws-sdk/client-dynamodb\u0026#34;); const { DynamoDBDocumentClient, DeleteCommand } = require(\u0026#34;@aws-sdk/lib-dynamodb\u0026#34;); const client = new DynamoDBClient({}); const dynamo = DynamoDBDocumentClient.from(client); exports.handler = async (event) =\u0026gt; { console.log(\u0026#34;Received event:\u0026#34;, JSON.stringify(event)); try { const noteId = event.pathParameters?.id; if (!noteId) { return { statusCode: 400, body: JSON.stringify({ error: \u0026#34;Missing noteId in pathParameters\u0026#34; }) }; } const params = { TableName: \u0026#34;NotesTable\u0026#34;, Key: { noteId } }; await dynamo.send(new DeleteCommand(params)); return { statusCode: 200, body: JSON.stringify({ message: \u0026#34;Note deleted\u0026#34; }) }; } catch (err) { console.error(\u0026#34;Error deleting note:\u0026#34;, err); return { statusCode: 500, body: JSON.stringify({ error: err.message }) }; } }; "
+},
+{
+	"uri": "//localhost:1313/3-accessibilitytoinstances/3.2-updatenote/",
+	"title": "Note Update Testing (PUT)",
+	"tags": [],
+	"description": "",
+	"content": "Steps to perform Step 1 - Create PUT request in Postman Select method as PUT Step 2 - Configure request URL:\nhttps://tg9k4ugn87.execute-api.ap-southeast-1.amazonaws.com/dev/notes/1\nHeaders:\nContent-Type: application/json Body:\n{ \u0026#34;noteId\u0026#34;: \u0026#34;1\u0026#34;, \u0026#34;title\u0026#34;: \u0026#34;hahaaaa\u0026#34;, \u0026#34;content\u0026#34;: \u0026#34;This is my first note\u0026#34; } Step 3 – Send request and check result { \u0026#34;message\u0026#34;: \u0026#34;Note updated successfully!\u0026#34; } Step 4 – Verify in DynamoDB Go to NotesTable\nFind noteId = \u0026ldquo;1\u0026rdquo;\nCheck if title has been updated to \u0026ldquo;hahaaaa\u0026rdquo; "
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/",
+	"title": "Preparation Steps",
+	"tags": [],
+	"description": "",
+	"content": "Overview In this section, you will set up the necessary resources for the personal note-taking system, including:\nIAM user DynamoDB for note storage Lambda function for business logic API Gateway to provide API endpoints Postman for testing Contents 2.1 Create DynamoDB Table\n2.2 Create Lambda Function\n2.3 Create API Gateway\n2.4 Install Postman\n"
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/2.3-functioncreateapi/",
+	"title": "Create API Gateway NotesAPI",
+	"tags": [],
+	"description": "",
+	"content": "📌 Overview In this section, we will create an API Gateway named NotesAPI with RESTful endpoints to manage notes, connecting to the previously created Lambda Function NotesFunction.\n🔧 Steps to Perform Step 1: Create a New API Gateway Go to AWS Management Console Search for and select the API Gateway service Click the Create API button Choose the API type as REST API (under \u0026ldquo;Build\u0026rdquo;) → Click Build\nConfigure basic information: API name: NotesAPI Description: API for managing notes Endpoint Type: Keep default Regional Click Create API Step 2: Create Resources and Methods On the newly created API management page, in the left panel:\nCreate the main resource:\nSelect Actions → Create Resource Resource Name: / Resource Path: notes Click Create Resource Create a child resource for individual notes:\nSelect resource /notes Select Actions → Create Resource Resource Name: /notes Resource Path: {id} Click Create Resource Create methods for each resource:\nFor resource /notes:\nSelect the resource → Create Method Choose POST → click the checkmark (✓) Configuration: Integration type: Lambda Function Lambda Region: Select your region Lambda Function: createNote Click Save → Confirm when asked about permission For resource /notes/{id}:\nRepeat the method creation process for: GET corresponding to lambda function getNote PUT corresponding to lambda function updateNote DELETE corresponding to lambda function deleteNote Result after creating resource methods: Step 3: Deploy the API Deploy API Deployment Configuration: Deployment stage: [New Stage] Stage name: dev Stage description: Production environment Deployment description: Initial deployment Click Deploy Step 4: Test API Endpoints After deployment, you will see the Invoke URL (e.g., https://abc123.execute-api.region.amazonaws.com/prod)\nThe complete endpoints will be:\nPOST: https://[your-invoke-url]/prod/notes GET: https://[your-invoke-url]/prod/notes/{id} PUT: https://[your-invoke-url]/prod/notes/{id} DELETE: https://[your-invoke-url]/prod/notes/{id} "
+},
+{
+	"uri": "//localhost:1313/3-accessibilitytoinstances/3.3-deletenote/",
+	"title": "Note Deletion Testing (DELETE)",
+	"tags": [],
+	"description": "",
+	"content": " 3.3 – Note Deletion Testing (DELETE) Step 1 – Create DELETE request in Postman\nSelect method as DELETE.\nStep 2 – Configure request\nURL:\nhttps://tg9k4ugn87.execute-api.ap-southeast-1.amazonaws.com/dev/notes/1\nStep 3 – Send request and check response\n{ \u0026#34;message\u0026#34;: \u0026#34;Note deleted successfully!\u0026#34; } Step 4 - Verify in DynamoDB Go to NotesTable.\nFind noteId = \u0026ldquo;1\u0026rdquo;.\nIf no data remains, the note has been successfully deleted. "
+},
+{
+	"uri": "//localhost:1313/3-accessibilitytoinstances/",
+	"title": "Testing with Postman",
+	"tags": [],
+	"description": "",
+	"content": "Overview After successfully deploying the Lambda Function and API Gateway, you will use the Postman tool to test the core features of the personal note-taking system.\nThrough Postman, you can send HTTP requests (such as POST, PUT, DELETE) to the API Gateway to interact with the note system.\nContent 3.1 – Test Creating a Note (POST) 3.2 – Test Updating a Note (PUT) 3.3 – Test Deleting a Note (DELETE) "
+},
+{
+	"uri": "//localhost:1313/4-cleanup/",
+	"title": "Clean Up AWS Resources",
+	"tags": [],
+	"description": "",
+	"content": "Steps to Clean Up Resources Step 1 – Delete API Gateway Go to the AWS Management Console Search for the API Gateway service Select the note-api API Click Actions → Delete Confirm deletion Step 2 – Delete Lambda Functions Go to the Lambda service Select each function: createNote getNote updateNote deleteNote Click Actions → Delete Confirm deletion for each function Step 3 – Delete DynamoDB Table Go to the DynamoDB service Select the NotesTable table Click Delete table Enter NotesTable to confirm Click Delete Step 4 – Delete CloudWatch Logs Go to the CloudWatch service Select Log groups Find and delete the related log groups: /aws/lambda/createNote /aws/lambda/getNote /aws/lambda/updateNote /aws/lambda/deleteNote Click Actions → Delete log group(s) Step 5 – Delete IAM Roles (if any) Go to the IAM service Select Roles Find and delete the roles: LambdaExecutionRole APIGatewayToLambdaRole Click Delete role ⚠️ Important Notes:\nMake sure to back up any important data before deletion Deleted resources cannot be recovered Double-check before confirming deletion "
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/2.4-gatewayinstallpostman/",
+	"title": "Postman Installation",
+	"tags": [],
+	"description": "",
+	"content": "Postman Installation In this step, we will download and install Postman - a tool used to test the APIs you have deployed in the workshop.\nVisit the Postman homepage\nSelect the version suitable for your operating system:\nWindows macOS Linux After downloading, proceed with installation:\nOn Windows: Run the .exe file and follow the instructions On macOS: Drag the Postman icon to the Applications folder Open Postman after successful installation\nYou can:\nLogin with your Postman account Or select Skip and go to the app to use it immediately Postman\u0026rsquo;s main interface:\nAPI Testing with Postman After installation, you can start testing the endpoints:\nMethod Endpoint Function POST /notes Create new note GET /notes/{id} Get note by ID PUT /notes/{id} Update note DELETE /notes/{id} Delete note Important notes:\nAdd header Content-Type: application/json For APIs requiring authentication, add x-api-key header with API Key from API Gateway 💡 Tip: You can save requests as Collections for later reuse\nNow you\u0026rsquo;re ready to test your personal note system using Postman!\n"
+},
+{
+	"uri": "//localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
